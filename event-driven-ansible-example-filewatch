@@ -1,0 +1,26 @@
+- name: Rulebook to do something
+  hosts: localhost
+  gather_facts: false
+
+  sources:
+      - ansible.eda.file_watch:
+          path: "/testeda/"
+          recursive: true 
+          ignore_regexes: [ '.*\.o' ]
+  rules:
+      - name: trigger on new file 
+        condition: event.change == 'created' # 'modified'
+        action:
+           run_module:
+               name: copy
+               module_args:
+                   src: "{{ event.src_path }}"
+                   dest: "/tmp/"
+
+      - name: trigger on file deletion 
+        condition: event.change == 'deleted' # 'modified'
+        action:
+           run_module:
+               name: debug
+               module_args:
+                   msg: "File {{ event.src_path }} was deleted"
