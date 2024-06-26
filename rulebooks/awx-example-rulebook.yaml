@@ -11,12 +11,12 @@
       - name: trigger on new file 
         condition: event.change == 'created' # 'modified'
         action:
-           run_playbook:
-               name: copy
+           run_job_template:
+               name: testplaybook
                                   
       - name: trigger on file deletion 
         condition: event.change == 'deleted' # 'modified'
         action:
-           run_playbook:
-               name: debug
+           run_job_template:
+               name: testplaybook
                
