@@ -17,7 +17,6 @@
                    src: "{{ event.src_path }}"
                    dest: "/tmp/"
                    
-
       - name: trigger on file deletion 
         condition: event.change == 'deleted' # 'modified'
         action:
