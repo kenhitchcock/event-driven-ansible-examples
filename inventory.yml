@@ -1,5 +1,10 @@
 all:
   hosts:
+    192.168.5.21:
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_connection: ssh        
+      ansible_user: ken
+      ansible_pass: password123
     localhost:
       ansible_connection: local
       ansible_python_interpreter: /usr/bin/python3
