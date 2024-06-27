@@ -13,10 +13,12 @@
         action:
            run_job_template:
                name: testplaybook
+               organization: Default
                                   
       - name: trigger on file deletion 
         condition: event.change == 'deleted' # 'modified'
         action:
            run_job_template:
                name: testplaybook
+               organization: Default
                
