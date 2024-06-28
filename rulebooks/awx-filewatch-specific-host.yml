@@ -1,0 +1,23 @@
+- name: Rulebook to do something
+  hosts: 192.168.5.21
+  gather_facts: false
+
+  sources:
+      - ansible.eda.file_watch:
+          path: "/testeda/"
+          recursive: true 
+          ignore_regexes: [ '.*\.o' ]
+  rules:
+      - name: trigger on new file 
+        condition: event.change == 'created' # 'modified'
+        action:
+           run_job_template:
+               name: testexample
+               organization: Default
+                                  
+      - name: trigger on file deletion 
+        condition: event.change == 'deleted' # 'modified'
+        action:
+           run_job_template:
+               name: testexample
+               organization: Default
