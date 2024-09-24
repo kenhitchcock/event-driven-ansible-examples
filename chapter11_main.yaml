@@ -6,5 +6,4 @@
   tasks:
     - name: "Create Message on Network Teams queue"
       ansible.builtin.shell:
-        cmd: artemis producer --destination=networkteam --message="protocol=tcp,port=5432,from=192.168.5.26,to=192.168.5.0/24" --url=tcp://localhost:61616 --message-count=1
-        chdir: /opt/redhat/amq-broker/broker/bin/
+        cmd: /opt/redhat/amq-broker/broker/bin/artemis producer --destination=networkteam --message="protocol=tcp,port=5432,from=192.168.5.26,to=192.168.5.0/24" --url=tcp://localhost:61616 --message-count=1
