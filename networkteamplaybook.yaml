@@ -1,1 +1,9 @@
-...
+---
+
+- name: Test Playbook
+  hosts: all
+
+  tasks:
+    - name: "Debugging"
+      debug:
+        msg: "Testing"
