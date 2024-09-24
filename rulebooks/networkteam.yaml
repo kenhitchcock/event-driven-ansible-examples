@@ -4,7 +4,7 @@
   sources:
       - ansible.eda.kafka:
           host: 192.168.5.25
-          port: 5672
+          port: 61616
           topic: networkteam
           check_hostname: False
           verify_mode: CERT_NONE
