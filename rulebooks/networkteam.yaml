@@ -4,8 +4,9 @@
   sources:
       - ansible.eda.kafka:
           host: 192.168.5.25
-          port: 1883
+          port: 61616
           topic: networkteam
+          check_hostname: False
           verify_mode: CERT_NONE
   rules:
       - name: trigger on new message for network team
