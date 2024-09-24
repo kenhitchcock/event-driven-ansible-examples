@@ -6,6 +6,7 @@
           host: 192.168.5.25
           port: 1883
           topic: networkteam
+          verify_mode: CERT_NONE
   rules:
       - name: trigger on new message for network team
         condition: event.message != ""
