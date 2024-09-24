@@ -1,23 +1,17 @@
-- name: Rulebook to do something
+- name: Rulebook run playbook for network team
   hosts: all
-  gather_facts: false
 
   sources:
-      - ansible.eda.file_watch:
-          path: "/testeda/"
-          recursive: true 
-          ignore_regexes: [ '.*\.o' ]
+      - ansible.eda.kafka:
+          host: 192.168.5.25
+          port: 61616
+          topic: networkteam
   rules:
-      - name: trigger on new file 
-        condition: event.change == 'created' # 'modified'
+      - name: trigger on new message for network team
+        condition: event.message != ""
         action:
-           run_job_template:
-               name: testexample
-               organization: Default
-                                  
-      - name: trigger on file deletion 
-        condition: event.change == 'deleted' # 'modified'
-        action:
-           run_job_template:
-               name: testexample
-               organization: Default
+          run_job_template:
+              name: networkteamplaybook
+              organization: Default
+
+                
