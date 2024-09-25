@@ -9,8 +9,12 @@
           check_hostname: False
           verify_mode: CERT_NONE
   rules:
-      - name: trigger on new message for network team
-        condition: event.message != ''
+    - name: trigger on new message for network team
+        condition:
+          any:
+            - event.message != ''
+            - event.message != ""
+            - event.message == ""
   action:
     debug:
       msg:
