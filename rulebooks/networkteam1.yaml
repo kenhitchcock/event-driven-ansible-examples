@@ -10,11 +10,7 @@
         
   rules:
     - name: trigger on new message for network team
-        condition:
-          any:
-            - event.message != ''
-            - event.message != ""
-            - event.message == ""
+        condition: event.change == 'created'
   action:
     run_job_template:
       name: networkteamplaybook
