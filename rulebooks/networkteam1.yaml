@@ -1,5 +1,6 @@
 - name: Rulebook run playbook for network team
   hosts: all
+  gather_facts: true
   sources:
     - ansible.eda.kafka:
         host: 192.168.5.25
@@ -7,7 +8,6 @@
         topic: networkteam
         check_hostname: False
         verify_mode: CERT_NONE
-        
   rules:
     - name: trigger on new message for network team
         condition: event.change == 'created'
