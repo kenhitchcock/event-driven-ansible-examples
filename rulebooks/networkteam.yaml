@@ -10,8 +10,8 @@
           verify_mode: CERT_NONE
   rules:
       - name: trigger on new message for network team
-        condition: event.message == '{"message": "message123", "moredata": "nope useless"}'
-        action:
-           run_job_template:
-              name: networkteamplaybook
-              organization: Default
+        condition: event.message != ''
+  action:
+    debug:
+      msg:
+        - "first: {{ events.first }}"
