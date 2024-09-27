@@ -1,5 +1,5 @@
 - name: Rulebook run playbook for network team
-  hosts: 192.168.5.25
+  hosts: all
   gather_facts: true
   sources:
     - ansible.eda.kafka:
