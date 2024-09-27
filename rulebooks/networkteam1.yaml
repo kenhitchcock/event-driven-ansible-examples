@@ -13,5 +13,5 @@
     - name: trigger on new message for network team
       condition: event.message is defined
       action:
-        print_event:
-          pretty: true
+        debug:
+          msg: "first: {{ events.first }}
