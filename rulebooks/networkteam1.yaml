@@ -15,6 +15,3 @@
       action:
         - print_event:
             pretty: true
-        - run_job_template:
-            name: networkteamplaybook
-            organization: Default
