@@ -5,12 +5,10 @@
     - ansible.eda.kafka:
         host: 192.168.5.25
         port: 9092
+        group_id: "mygroupid"
         topic: networkteam
-        check_hostname: False
+        check_hostname: false
         verify_mode: CERT_NONE
-    - ansible.eda.webhook:
-        host: 0.0.0.0
-        port: 8080
 
   rules:
     - name: trigger on new message for network teams
@@ -19,9 +17,8 @@
         run_job_template:
           name: networkteamplaybook
           organization: Default
-    - name: webhook
-      condition: event.payload.message != ""
-      action:
-        run_job_template:
-          name: networkteamplaybook
-          organization: Default
+    - name: Debug demo event
+      condition: event.message is defined
+      actions:
+        - print_event:
+            pretty: true
