@@ -13,5 +13,6 @@
     - name: trigger on new message for network team
       condition: event.message is defined
       action:
-        debug:
-          msg: "first: {{ events.first }}
+        run_job_template:
+          name: networkteamplaybook
+          organization: Default
