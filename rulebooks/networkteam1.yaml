@@ -8,9 +8,18 @@
         topic: networkteam
         check_hostname: False
         verify_mode: CERT_NONE
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 8080
 
   rules:
     - name: trigger on new message for network team
+      condition: event.message != ""
+      action:
+        run_job_template:
+          name: networkteamplaybook
+          organization: Default
+    - name: webhook
       condition: event.payload.message != ""
       action:
         run_job_template:
