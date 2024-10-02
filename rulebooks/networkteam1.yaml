@@ -13,7 +13,7 @@
 
   rules:
     - name: trigger on new message for network teams
-      condition: event.message != ""
+      condition: event.body != ""
       action:
         run_job_template:
           name: networkteamplaybook
