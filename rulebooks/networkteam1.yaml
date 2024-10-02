@@ -20,7 +20,7 @@
           organization: Default
           job_args:
             extra_vars:
-              hello: Fred
+              kafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
         
