@@ -7,3 +7,6 @@
     - name: "Debugging"
       debug:
         msg: "Testing"
+    - name: "Debug Message"
+      debug:
+        msg: "{{kafkamessage}}"
