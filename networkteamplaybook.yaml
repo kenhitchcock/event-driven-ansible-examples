@@ -9,4 +9,4 @@
         msg: "Testing"
     - name: "Debug Message"
       debug:
-        msg: "{{ ansible_eda.event.body }}"
+        msg: "{{ extra_vars.kafkamessage }}"
