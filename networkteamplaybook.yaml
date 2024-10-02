@@ -9,4 +9,4 @@
         msg: "Testing"
     - name: "Debug Message"
       debug:
-        msg: "{{ job_args }}"
+        msg: "{{ extra_vars.kafkamessage }}"
