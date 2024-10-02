@@ -2,6 +2,7 @@
 
 - name: Test Playbook
   hosts: all
+  gather_facts: false
 
   tasks:
     - name: "Debugging"
