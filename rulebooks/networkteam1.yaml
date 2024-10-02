@@ -19,7 +19,7 @@
           name: networkteamplaybook
           organization: Default
           post_events: true
-          extra_vars:
+          job_args:
             kafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
