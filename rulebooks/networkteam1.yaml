@@ -18,6 +18,7 @@
         run_job_template:
           name: networkteamplaybook
           organization: Default
+          post_events: true
           job_args:
             extra_vars:
               kafkamessage: "{{ event.body }}"
