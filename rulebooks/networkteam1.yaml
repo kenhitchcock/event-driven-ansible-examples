@@ -18,8 +18,9 @@
         run_job_template:
           name: networkteamplaybook
           organization: Default
-    - name: Debug demo event
-      condition: event.message is defined
-      actions:
-        - print_event:
-            pretty: true
+          job_args:
+            extra_vars:
+              hello: Fred
+          retries: 1
+          delay: 10
+        
