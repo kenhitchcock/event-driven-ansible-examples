@@ -20,7 +20,8 @@
           organization: Default
           post_events: true
           job_args:
-            kafkamessage: "{{ event.body }}"
+            extra_vars:
+              kafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
         
