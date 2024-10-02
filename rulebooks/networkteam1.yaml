@@ -21,6 +21,7 @@
           post_events: true
           job_args:
             extra_vars:
+              fred: "yes sir"
               kafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
