@@ -119,9 +119,7 @@
         - infrakafkamessage.VM_Name not in disks.stdout 
     
     - name: "Start VM on Libvirt host"
-      virt:
-        name: '{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}'
-        state: running
+      shell: "virsh start {{ infrakafkamessage.VM_Name }}"
       when:
         - vm_state == 'present'
       
