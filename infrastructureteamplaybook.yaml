@@ -35,7 +35,7 @@
     - name: "Clone Image"
       command: >
                virt-clone --connect qemu:///system --original {{ vm_libvirt_template }} 
-               --name {{ infrakafkamessage.VM_Name }}.{{ vm_public_private_domain_name }} 
+               --name {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} 
                --file {{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }} 
       when: 
         - infrakafkamessage.VM_Name not in disks.stdout 
