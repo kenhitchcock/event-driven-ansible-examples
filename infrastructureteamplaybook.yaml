@@ -11,7 +11,6 @@
     vm_libvirt_file_type: 'qcow2'
     vm_libvirt_vmos: 'linux'
     vm_name: 'test_vm01'
-    vm_state: present
     public_private_domain_name: 'kenlab.local'
     virtual_network_name: default
     vm_network_device: enp1s0
@@ -21,6 +20,47 @@
     - name: "Building Virtual Machine with these specs"
       debug:
         msg: "{{ infrakafkamessage }}"
+
+- name: "Set facts"
+  set_fact:
+    vm_state: "{{infrakafkamessage.VM_State}}"
+
+- name: "Status of VM on Libvirt host"
+  virt:
+    name: '{{ cornerstone_vm_name }}.{{ cornerstone_public_private_domain_name }}' 
+    command: status
+  register: vm_status
+  ignore_errors: true
+  when:
+    - vm_state == 'absent'
+
+- name: "Remove vm if dict object marked as absent"
+  block:
+    - name: "Stop VM on Libvirt host"
+      shell: "virsh destroy {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+      ignore_errors: true
+
+    - name: "Undefine VM from Libvirt host"
+      shell: "virsh undefine {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+      ignore_errors: true
+
+    - name: "Remove VM files"
+      file:
+        path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }}'
+        state: absent
+      ignore_errors: true
+
+    - name: "Remove VM data disk"
+      file:
+        path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}-datadisk.{{ vm_libvirt_file_type }}'
+        state: absent
+      ignore_errors: true
+      when:
+        - vm_data_disk == true
+
+  ignore_errors: true
+  when:
+    - vm_state == 'absent'
 
     - name: "get VM disks"
       command: "ls {{ vm_location }}"
