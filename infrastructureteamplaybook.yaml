@@ -15,15 +15,12 @@
     virtual_network_name: default
     vm_network_device: enp1s0
     vm_set_root_password: false
+    vm_state: "{{infrakafkamessage.VM_State}}"
 
   tasks:
     - name: "Building Virtual Machine with these specs"
       debug:
         msg: "{{ infrakafkamessage }}"
-
-- name: "Set facts"
-  set_fact:
-    vm_state: "{{infrakafkamessage.VM_State}}"
 
 - name: "Status of VM on Libvirt host"
   virt:
