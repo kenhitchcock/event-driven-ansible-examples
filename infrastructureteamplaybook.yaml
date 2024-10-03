@@ -75,7 +75,7 @@
              \nGATEWAY={{ infrakafkamessage.VM_Gateway }}
              \nDNS1={{ infrakafkamessage.VM_DNS1 }}
              \nDNS2={{ infrakafkamessage.VM_DNS2 }}
-             \nDOMAIN={{ public_private_domain_name }}" >>{{ cornerstone_working_dir }}{{ cornerstone_vm_name }}/ifcfg-{{ cornerstone_vm_network_device }}
+             \nDOMAIN={{ public_private_domain_name }}" >>{{ working_dir }}{{ infrakafkamessage.VM_Name }}/ifcfg-{{ vm_network_device }}
       when: 
         - infrakafkamessage.VM_Name not in disks.stdout 
         - vm_state == 'present'
