@@ -1,0 +1,10 @@
+---
+
+- name: Create a new database
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: "Create a new database"
+      debug:
+        msg: "{{ kafkamessage }}"
