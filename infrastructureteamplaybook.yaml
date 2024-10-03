@@ -15,14 +15,6 @@
     virtual_network_name: default
     vm_network_device: enp1s0
     vm_set_root_password: false
-    vm_os_disk_size: 10
-    vm_libvirt_vmmem: 2048
-    vm_libvirt_vmcores: 2
-    vm_ip: 192.168.122.149
-    vm_subnet: 24
-    vm_gateway: 192.168.122.1
-    vm_dns1: 192.168.122.1
-    vm_dns2: 192.168.122.10
 
   tasks:
     - name: "Building Virtual Machine with these specs"
