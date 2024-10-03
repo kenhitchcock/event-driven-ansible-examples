@@ -12,7 +12,7 @@
     vm_libvirt_vmos: 'linux'
     vm_name: 'test_vm01'
     vm_state: present
-    vm_public_private_domain_name: 'kenlab.local'
+    public_private_domain_name: 'kenlab.local'
     virtual_network_name: default
     vm_network_device: enp1s0
     vm_set_root_password: false
