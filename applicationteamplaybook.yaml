@@ -1,0 +1,10 @@
+---
+
+- name: Deploy web application
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: "Deploying web application"
+      debug:
+        msg: "{{ kafkamessage }}"
