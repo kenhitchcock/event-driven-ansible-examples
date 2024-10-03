@@ -22,33 +22,32 @@
       debug:
         msg: "{{ infrakafkamessage }}"
 
-- name: "Remove vm if dict object marked as absent"
-  block:
-    - name: "Stop VM on Libvirt host"
-      shell: "virsh destroy {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
-      ignore_errors: true
+    - name: "Remove vm if dict object marked as absent"
+      block:
+        - name: "Stop VM on Libvirt host"
+          shell: "virsh destroy {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+          ignore_errors: true
 
-    - name: "Undefine VM from Libvirt host"
-      shell: "virsh undefine {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
-      ignore_errors: true
+        - name: "Undefine VM from Libvirt host"
+          shell: "virsh undefine {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+          ignore_errors: true
 
-    - name: "Remove VM files"
-      file:
-        path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }}'
-        state: absent
-      ignore_errors: true
+        - name: "Remove VM files"
+          file:
+            path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }}'
+            state: absent
+          ignore_errors: true
 
-    - name: "Remove VM data disk"
-      file:
-        path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}-datadisk.{{ vm_libvirt_file_type }}'
-        state: absent
+        - name: "Remove VM data disk"
+          file:
+            path: '{{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}-datadisk.{{ vm_libvirt_file_type }}'
+            state: absent
+          ignore_errors: true
+          when:
+            - vm_data_disk == true
       ignore_errors: true
       when:
-        - vm_data_disk == true
-
-  ignore_errors: true
-  when:
-    - vm_state == 'absent'
+        - vm_state == 'absent'
 
     - name: "get VM disks"
       command: "ls {{ vm_location }}"
