@@ -4,7 +4,7 @@
   hosts: all
   gather_facts: true
   vars:
-    kafkamessage: "Test Me a message"
+    kafkamessage1: "Test Me a message"
     
   tasks:
     - name: "Debugging"
