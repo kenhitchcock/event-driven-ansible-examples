@@ -5,6 +5,9 @@
   gather_facts: true
 
   tasks:
-    - name: "Building a virtual machine"
+    - name: "Debugging"
+      debug:
+        msg: "Testing"
+    - name: "Debug Message"
       debug:
         msg: "{{ kafkamessage }}"
