@@ -4,12 +4,118 @@
   hosts: all
   gather_facts: true
   vars:
-    kafkamessage1: "Test Me a message"
-    
+    vm_location: '/var/lib/libvirt/images/'
+    working_dir: '/tmp/'
+    vm_libvirt_template: 'rhel8-image'
+    vm_libvirt_file_type: 'qcow2'
+    vm_libvirt_vmos: 'linux'
+    vm_name: 'test_vm01'
+    vm_state: present
+    vm_public_private_domain_name: 'kenlab.local'
+    virtual_network_name: default
+    vm_network_device: enp1s0
+    vm_set_root_password: false
+    vm_os_disk_size: 10
+    vm_libvirt_vmmem: 2048
+    vm_libvirt_vmcores: 2
+    vm_ip: 192.168.122.149
+    vm_subnet: 24
+    vm_gateway: 192.168.122.1
+    vm_dns1: 192.168.122.1
+    vm_dns2: 192.168.122.10
+
   tasks:
-    - name: "Debugging"
-      debug:
-        msg: "Testing"
-    - name: "Debug Message"
+    - name: "Building Virtual Machine with these specs"
       debug:
         msg: "{{ infrakafkamessage }}"
+
+    - name: "get VM disks"
+      command: "ls {{ vm_location }}"
+      register: disks
+      changed_when: "disks.rc != 0"
+    
+    - name: "Create working directories"
+      file: path={{ working_dir }}{{ infrakafkamessage.VM_Name }} state=directory
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout
+
+    - name: "Clone Image"
+      command: >
+               virt-clone --connect qemu:///system --original {{ vm_libvirt_template }} 
+               --name {{ infrakafkamessage.VM_Name }}.{{ vm_public_private_domain_name }} 
+               --file {{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }} 
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+
+    - name: "Set memory For VMs"
+      shell: "virt-xml --memory {{ infrakafkamessage.VM_MEM }} {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} --edit"
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+    
+    - name: "Set vCPUs For VMs"
+      shell: "virt-xml --vcpu {{ infrakafkamessage.VM_CPU }} {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} --edit"
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+   
+    - name: "Set Network For VMs"
+      shell: "virt-xml --network network={{virtual_network_name}},model=virtio {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} --edit"
+      when:
+        - infrakafkamessage.VM_Name not in disks.stdout
+        - vm_state == 'present'
+
+    - name: "Increase disk sizes"
+      shell: "qemu-img resize {{ vm_location }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}.{{ vm_libvirt_file_type }} +{{ infrakafkamessage.VM_Disk }}G"
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+
+    - name: "Create network configuration for each VM"
+      shell: echo -e "BOOTPROTO=static
+             \nDEVICE={{ vm_network_device }}
+             \nONBOOT=yes
+             \nTYPE=Ethernet
+             \nIPADDR={{ infrakafkamessage.VM_IP }}
+             \nPREFIX=24
+             \nGATEWAY={{ infrakafkamessage.VM_Gateway }}
+             \nDNS1={{ infrakafkamessage.VM_DNS1 }}
+             \nDNS2={{ infrakafkamessage.VM_DNS2 }}
+             \nDOMAIN={{ public_private_domain_name }}" >>{{ cornerstone_working_dir }}{{ cornerstone_vm_name }}/ifcfg-{{ cornerstone_vm_network_device }}
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+    
+    - name: "Create hostfile entry"
+      shell: echo -e "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+             \n::1         localhost localhost.localdomain localhost6 localhost6.localdomain6 
+             \n{{ infrakafkamessage.VM_IP }}         {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} {{ infrakafkamessage.VM_Name }}
+             " >>{{ working_dir }}{{ infrakafkamessage.VM_Name }}/hosts
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+    
+    - name: "Set Hostname and Copy in network configuration"
+      shell: "virt-customize --hostname {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} --copy-in {{ working_dir }}{{ infrakafkamessage.VM_Name }}/ifcfg-{{ vm_network_device }}:/etc/sysconfig/network-scripts/ --copy-in {{ working_dir }}{{ infrakafkamessage.VM_Name }}/hosts:/etc/ --edit /etc/ssh/sshd_config:'s/^#UseDNS yes/UseDNS no/' -d {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+    
+    - name: "Check if root ssh keys generated"
+      stat: path=/root/.ssh/id_rsa.pub
+      register: root_ssh
+    
+    # Need to make sure the --selinux-relabel is inplace https://bugzilla.redhat.com/show_bug.cgi?id=1378311
+    - name: "Copy in ssh keys and relabel for newer version of RHEL 7"
+      shell: "virt-customize --ssh-inject root:file:/root/.ssh/id_rsa.pub --selinux-relabel -d {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+        - vm_state == 'present'
+
+    - name: "Set root password on VM if requested"
+      shell: "virt-customize --root-password password:{{vm_root_password}} -d {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
+      when:
+        - infrakafkamessage.VM_Name not in disks.stdout
+        - vm_state == 'present'
+        - vm_set_root_password
