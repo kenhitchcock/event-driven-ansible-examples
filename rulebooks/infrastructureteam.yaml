@@ -12,7 +12,7 @@
         verify_mode: "CERT_NONE"
 
   rules:
-    - name: trigger on new message for infrastructure team
+    - name: trigger on new message for infrastructure teams
       condition: event.body != ""
       action:
         run_job_template:
@@ -20,6 +20,7 @@
           organization: Default
           job_args:
             extra_vars:
+              fred: "yes sir"
               kafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
