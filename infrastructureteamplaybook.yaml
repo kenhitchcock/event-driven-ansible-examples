@@ -112,3 +112,16 @@
         - infrakafkamessage.VM_Name not in disks.stdout
         - vm_state == 'present'
         - vm_set_root_password
+
+    - name: "Clean up working files"
+      file: path={{ working_dir }}{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }} state=absent
+      when: 
+        - infrakafkamessage.VM_Name not in disks.stdout 
+    
+    - name: "Start VM on Libvirt host"
+      virt:
+        name: '{{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}'
+        state: running
+      when:
+        - vm_state == 'present'
+      
