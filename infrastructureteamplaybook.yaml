@@ -3,7 +3,9 @@
 - name: Build A Virtual Machine
   hosts: all
   gather_facts: true
-
+  vars:
+    kafkamessage: "Test Me a message"
+    
   tasks:
     - name: "Debugging"
       debug:
