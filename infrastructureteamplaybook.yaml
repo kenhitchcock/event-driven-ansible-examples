@@ -22,15 +22,6 @@
       debug:
         msg: "{{ infrakafkamessage }}"
 
-- name: "Status of VM on Libvirt host"
-  virt:
-    name: '{{ cornerstone_vm_name }}.{{ cornerstone_public_private_domain_name }}' 
-    command: status
-  register: vm_status
-  ignore_errors: true
-  when:
-    - vm_state == 'absent'
-
 - name: "Remove vm if dict object marked as absent"
   block:
     - name: "Stop VM on Libvirt host"
