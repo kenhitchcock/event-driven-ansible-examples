@@ -1,0 +1,10 @@
+---
+
+- name: Build A Virtual Machine
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: "Building a virtual machine"
+      debug:
+        msg: "{{ kafkamessage }}"
