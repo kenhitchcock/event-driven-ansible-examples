@@ -3,6 +3,7 @@
 - name: Build A Virtual Machine
   hosts: all
   gather_facts: true
+  become: true
   vars:
     vm_location: '/var/lib/libvirt/images/'
     working_dir: '/tmp/'
