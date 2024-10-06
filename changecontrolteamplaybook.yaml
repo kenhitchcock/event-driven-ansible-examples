@@ -1,0 +1,16 @@
+---
+
+- name: Change Control Playbook
+  hosts: all
+  gather_facts: false
+  vars:
+    change_approved: false
+
+  tasks:
+    - name: "Raising a change request"
+      debug:
+        msg: "A new change request has been raised."
+      
+    - name: "Change control request approved"
+      ansible.builtin.set_fact:
+        change_approved: 
