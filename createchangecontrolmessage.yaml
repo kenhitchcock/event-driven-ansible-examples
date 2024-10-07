@@ -10,8 +10,8 @@
 
   tasks:
     - name: "Who am i"
-      shell:
-        cmd: "ip a"
+      shell: |
+         "ip a"
         
     - name: "Create a change control team kafka message"
       wwt.kafka.kafka_producer:
