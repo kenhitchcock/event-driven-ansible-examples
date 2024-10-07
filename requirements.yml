@@ -2,3 +2,7 @@
 collections:
 - name: wwt.kafka
   version: ">=1.0.3"
+
+pip: 
+- name: kafka-python 
+- name: aiokafka
