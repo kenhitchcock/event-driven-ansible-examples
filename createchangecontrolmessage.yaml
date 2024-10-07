@@ -9,11 +9,11 @@
     changecontrol_message_send: true
 
   tasks:
-   - name: Install multi python packages required to send kafka message
-     ansible.builtin.pip:
-       name:
-         - kafka-python
-         - aiokafka
+    - name: Install multi python packages required to send kafka message
+      ansible.builtin.pip:
+        name:
+          - kafka-python
+          - aiokafka
              
     - name: "Create a change control team kafka message"
       wwt.kafka.kafka_producer:
