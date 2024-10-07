@@ -13,4 +13,4 @@
       
     - name: "Change control request approved"
       ansible.builtin.set_fact:
-        change_approved: 
+        change_approved: true
