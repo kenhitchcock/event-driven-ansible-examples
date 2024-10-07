@@ -1,0 +1,18 @@
+---
+
+- name: "create change control kafka messages"
+  hosts: localhost
+  become: true
+  vars:
+    changecontrol_messages_kafka_data: {"Name": Change Request for Networkchange, "Description": A change is required to open port 5432 from address 192.168.5.51}
+    changecontrol_message_send: true
+
+  tasks:
+    - name: "Create a change control team kafka message"
+      wwt.kafka.kafka_producer:
+        host: "192.168.5.25"
+        port: "9092"
+        topic: "changecontrolteam"
+        group_id: "mygroupid"
+        data: "{{ changecontrol_messages_kafka_data }}"
+      when: changecontrol_message_send
