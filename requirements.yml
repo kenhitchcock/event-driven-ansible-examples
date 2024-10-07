@@ -2,4 +2,3 @@
 collections:
 - name: wwt.kafka
   version: ">=1.0.3"
-  source: https://galaxy.ansible.com/ui/repo/published/wwt/kafka/
