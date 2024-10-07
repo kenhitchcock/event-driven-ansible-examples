@@ -6,7 +6,6 @@
     - ansible.eda.kafka:
         host: "192.168.5.25"
         port: "9092"
-        group_id: "mygroupid"
         topic: "infrastructureteam"
         check_hostname: false
         verify_mode: "CERT_NONE"
@@ -15,12 +14,11 @@
     - name: trigger on new message for infrastructure teams
       condition: event.body != ""
       action:
-        run_job_template:
-          name: infrastructureteamplaybook
+        run_workflow_template:
+          name: infrastructureteamworkflow
           organization: Default
           job_args:
             extra_vars:
-              fred: "yes sir"
               infrakafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
