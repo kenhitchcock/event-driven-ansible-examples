@@ -8,6 +8,9 @@
     changecontrol_message_send: true
 
   tasks:
+    - name: "Who am i"
+      debug:
+        msg: "{{ansible_default_ipv4.address}}"
     - name: "Create a change control team kafka message"
       wwt.kafka.kafka_producer:
         host: "192.168.5.25"
