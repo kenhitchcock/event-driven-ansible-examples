@@ -1,0 +1,10 @@
+---
+
+- name: Configure Webserver
+  hosts: all
+
+  tasks:
+    - name: "Install Web server package"
+      dnf:
+        name: "httpd"
+        state: present
