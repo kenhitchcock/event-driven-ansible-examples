@@ -12,13 +12,13 @@
 
   rules:
     - name: trigger on new message for network teams
-      condition: event.body != ""
+      condition: event.message != ""
       action:
         run_job_template:
           name: networkteamplaybook
           organization: Default
           job_args:
             extra_vars:
-              kafkamessage: "{{ event.body }}"
+              kafkamessage: "{{ event.message }}"
           retries: 1
           delay: 10
