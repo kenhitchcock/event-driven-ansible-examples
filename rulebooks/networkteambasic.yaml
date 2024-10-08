@@ -1,0 +1,20 @@
+---
+- name: Rulebook run playbook for network team
+  hosts: all
+  gather_facts: true
+  sources:
+    - ansible.eda.kafka:
+        host: "192.168.5.25"
+        port: "9092"
+        topic: "networkteam"
+        check_hostname: false
+        verify_mode: "CERT_NONE"
+
+  rules:
+    - name: trigger on new message for network teams
+      condition: event.body != ""
+      action:
+        run_module:
+          name: debug
+          module_args:
+            msg: "{{event.body}}"
