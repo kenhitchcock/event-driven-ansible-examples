@@ -13,8 +13,8 @@
     - name: "trigger on new message for network teams"
       condition: event.body != ""
       action:
-        run_job_template:
-          name: networkteamplaybook
+        run_workflow_template:
+          name: networkteamworkflow
           organization: Default
           job_args:
             extra_vars:
