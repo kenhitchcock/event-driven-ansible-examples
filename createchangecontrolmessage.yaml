@@ -8,6 +8,11 @@
     changecontrol_message_send: true
 
   tasks:
+    - name: Install python3-pip
+      ansible.builtin.dnf:
+        name: python3-pip
+        state: present
+        
     - name: Install multi python packages required to send kafka message
       ansible.builtin.pip:
         name:
