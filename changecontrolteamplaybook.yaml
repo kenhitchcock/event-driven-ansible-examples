@@ -9,7 +9,7 @@
   tasks:
     - name: "Raising a change request"
       debug:
-        msg: "A new change request has been raised for '{{kafkamessage.Name}}'."
+        msg: "A new change request has been raised for {{kafkamessage.Name}}. Open Port {{kafkamessage.Port} from {{kafkamessage.From} to {{kafkamessage.To} ."
       
     - name: "Change control request approved"
       ansible.builtin.set_fact:
