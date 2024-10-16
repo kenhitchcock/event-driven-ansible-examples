@@ -8,3 +8,7 @@
     - name: "Check to see if hypervisor has enough capcity for Virtual Machine with these specs"
       debug:
         msg: "{{ infrakafkamessage }}"
+        
+    - name: "Are there enough resources"
+      debug:
+        msg: "Yes, procceed"
