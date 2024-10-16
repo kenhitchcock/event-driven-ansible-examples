@@ -6,7 +6,7 @@
   vars:
     kafka_server: "192.168.5.29"
     kafka_port: "9092"
-    kafka_topic: "networkteam"
+    kafka_topic: "changecontrolteam"
     kafka_message: {"message": Open a new Port to database server, "From": 10.168.5.50, "To": 10.168.5.32, "Port": 5444, "Protocol": TCP}
     kafka_send: true
 
