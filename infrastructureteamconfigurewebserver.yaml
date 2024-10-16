@@ -1,7 +1,7 @@
 ---
 
 - name: Configure Webserver
-  hosts: all
+  hosts: 192.168.122.30
 
   tasks:
     - name: "Install Web server package"
