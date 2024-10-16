@@ -9,7 +9,8 @@
       debug:
         msg: "Opening Ports {{ kafkamessage.Port }} from {{ kafkamessage.From }} to {{ kafkamessage.To }}"
      
-    - ansible.posix.firewalld:
+    - name: "Open port on server {{ kafkamessage.To }}"
+      ansible.posix.firewalld:
         port: "{{ kafkamessage.Port }}/{{ kafkamessage.Protocol }}"
         permanent: true
         state: enabled
