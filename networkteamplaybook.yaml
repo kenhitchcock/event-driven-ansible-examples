@@ -1,9 +1,18 @@
 ---
+- name: Create Inventory
+  hosts: firewalls
+
+  tasks:
+    - name: "Create Dynamic inventory for new server"
+      add_host:
+        hostname: "{{ kafkamessage.To }}"
+        groupname: "newvm"
+
 
 - name: "Network Team Playbook"
-  hosts: "{{ kafkamessage.To }}"
+  hosts: newvm
   gather_facts: false
-
+  
   tasks:
     - name: "Opening Ports {{ kafkamessage.Port }} from {{ kafkamessage.From }} to {{ kafkamessage.To }} "
       debug:
