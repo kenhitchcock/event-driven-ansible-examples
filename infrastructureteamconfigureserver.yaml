@@ -1,7 +1,7 @@
 ---
 
 - name: Configure Server
-  hosts: "{{infrakafkamessage.VM_IP}}
+  hosts: "{{infrakafkamessage.VM_IP}}"
 
   tasks:
     - name: "Install Web server package"
