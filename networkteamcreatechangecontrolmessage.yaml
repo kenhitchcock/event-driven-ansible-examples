@@ -1,7 +1,7 @@
 ---
 
 - name: "create change control kafka messages"
-  hosts: 192.168.5.29
+  hosts: messageserver
   become: true
   vars:
     kafka_server: "192.168.5.29"
