@@ -7,7 +7,7 @@
     kafka_server: "192.168.5.29"
     kafka_port: "9092"
     kafka_topic: "networkteam"
-    kafka_message: {"message": Open a new Port to database server, "From": 192.168.122.30, "To": 192.168.122.20, "Port": 5432, "Protocol": TCP}
+    kafka_message: {"message": Open a new Port to database server, "From": 192.168.122.30, "To": 192.168.122.20, "Port": 5432, "Protocol": tcp}
     kafka_send: true
 
 
