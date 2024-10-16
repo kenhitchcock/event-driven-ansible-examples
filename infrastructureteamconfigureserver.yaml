@@ -1,6 +1,6 @@
 ---
 - name: Create Inventory
-  hosts: hypervisor
+  hosts: messageserver
 
   tasks:
     - name: "Create Dynamic inventory for new server"
