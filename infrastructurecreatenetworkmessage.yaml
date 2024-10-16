@@ -1,7 +1,7 @@
 ---
 
 - name: "Create infrastructure network change messages"
-  hosts: all
+  hosts: 192.168.5.29
   become: true
   vars:
     kafka_server: "192.168.5.29"
