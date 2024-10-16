@@ -1,0 +1,32 @@
+---
+
+- name: "Create infrastructure network change messages"
+  hosts: all
+  become: true
+  vars:
+    kafka_server: "192.168.5.29"
+    kafka_port: "9092"
+    kafka_topic: "networkteam"
+    kafka_message: {"message": Open a new Port to database server, "From": 192.168.122.30, "To": 192.168.122.20, "Port": 5432, "Protocol": TCP}
+    kafka_send: true
+
+
+  tasks:
+    - name: Install python3-pip
+      ansible.builtin.dnf:
+        name: python3-pip
+        state: present
+        
+    - name: Install multi python packages required to send kafka message
+      ansible.builtin.pip:
+        name:
+          - kafka-python
+          - aiokafka
+             
+    - name: "Create a network team kafka message"
+      wwt.kafka.kafka_producer:
+        host: "{{ kafka_server }}"
+        port: "{{ kafka_port }}"
+        topic: "{{ kafka_topic }}"
+        data: "{{ kafka_message }}"
+      when: kafka_send
