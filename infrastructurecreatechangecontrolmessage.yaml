@@ -4,8 +4,12 @@
   hosts: all
   become: true
   vars:
-    changecontrol_messages_kafka_data: {"Name": Change Request for Infrastructure change, "Description": A change is required to create a new virtual machine}
-    changecontrol_message_send: true
+    kafka_server: "192.168.5.29"
+    kafka_port: "9092"
+    kafka_topic: "changecontrolteam"
+    kafka_message: {"Name": Change Request for Infrastructure change, "Description": A change is required to create a new virtual machine}
+    kafka_send: true
+
 
   tasks:
     - name: Install python3-pip
@@ -19,10 +23,10 @@
           - kafka-python
           - aiokafka
              
-    - name: "Create a change control team kafka message"
+    - name: "Create a network team kafka message"
       wwt.kafka.kafka_producer:
-        host: "192.168.5.29"
-        port: "9092"
-        topic: "changecontrolteam"
-        data: "{{ changecontrol_messages_kafka_data }}"
-      when: changecontrol_message_send
+        host: "{{ kafka_server }}"
+        port: "{{ kafka_port }}"
+        topic: "{{ kafka_topic }}"
+        data: "{{ kafka_message }}"
+      when: kafka_send
