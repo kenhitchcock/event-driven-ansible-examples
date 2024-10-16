@@ -149,4 +149,5 @@
       shell: "virsh start {{ infrakafkamessage.VM_Name }}.{{ public_private_domain_name }}"
       when:
         - vm_state == 'present'
+      ignore_errors: true
       
