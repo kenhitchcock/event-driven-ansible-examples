@@ -1,0 +1,10 @@
+---
+
+- name: Build A Virtual Machine
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: "Check to see if hypervisor has enough capcity for Virtual Machine with these specs"
+      debug:
+        msg: "{{ infrakafkamessage }}"
