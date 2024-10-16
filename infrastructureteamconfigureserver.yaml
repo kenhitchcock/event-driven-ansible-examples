@@ -1,8 +1,15 @@
 ---
+- name: Create Inventory
+  hosts: hypervisor
+
+  tasks:
+    - name: "Create Dynamic inventory for new server"
+      add_host:
+        hostname: "{{infrakafkamessage.VM_IP}}"
+        groupname: "newvm"
 
 - name: Configure Server
-  hosts: "{{infrakafkamessage.VM_IP}}"
-
+  hosts: newvm
   tasks:
     - name: "Install Web server package"
       ansible.builtin.dnf:
