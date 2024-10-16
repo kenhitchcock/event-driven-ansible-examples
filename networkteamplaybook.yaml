@@ -1,7 +1,7 @@
 ---
 
 - name: "Network Team Playbook"
-  hosts: all
+  hosts: "{{ kafkamessage.To }}"
   gather_facts: false
 
   tasks:
