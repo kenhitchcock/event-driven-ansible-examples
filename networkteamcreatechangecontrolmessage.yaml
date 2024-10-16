@@ -7,7 +7,7 @@
     kafka_server: "192.168.5.29"
     kafka_port: "9092"
     kafka_topic: "changecontrolteam"
-    kafka_message: {"Name": Open a new Port to database server, "Description:": Please open port 5432 From server 192.168.122.30 to 192.168.122.20}
+    kafka_message: {"Name": Open a new Port to database server, "Description": Please open port 5432 From server 192.168.122.30 to 192.168.122.20}
     kafka_send: true
 
   tasks:
