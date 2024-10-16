@@ -1,13 +1,15 @@
 ---
 
-- name: Test Playbook
+- name: "Network Team Playbook"
   hosts: all
   gather_facts: false
 
   tasks:
-    - name: "Debugging"
+    - name: "Opening Ports {{ kafkamessage.Port }} from {{ kafkamessage.From }} to {{ kafkamessage.To }} "
       debug:
-        msg: "Testing"
-    - name: "Debug Message"
-      debug:
-        msg: "{{ kafkamessage.From }}"
+        msg: "Opening Ports {{ kafkamessage.Port }} from {{ kafkamessage.From }} to {{ kafkamessage.To }}"
+     
+    - ansible.posix.firewalld:
+        port: "{{ kafkamessage.Port }}/{{ kafkamessage.Protocol }}"
+        permanent: true
+        state: enabled
