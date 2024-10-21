@@ -7,10 +7,14 @@
   tasks:
     - name: "Download database SQL file"
       ansible.builtin.get_url:
-        url: https://github.com/kenhitchcock/summitdemoapp/blob/main/database.sql
+        url: "{{ dbkafkamessage.DB_sql }}"
         dest: /tmp/database.sql
-        mode: '0440'
-    
-    - name: "Debug Message"
+        mode: '0744'
+
+    - name: "Create new Database."
       debug:
-        msg: "{{ kafkamessage }}"
+        msg: "{{ dbkafkamessage }}"
+        
+    - name: "Updating the HBA Config for new webserver"
+      debug:
+        msg: "{{ dbkafkamessage }}"
