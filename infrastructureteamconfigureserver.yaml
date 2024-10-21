@@ -11,7 +11,7 @@
 - name: Configure Server
   hosts: newvm
   tasks:
-    - name: Register as user (joe_user) with password (somepass) and auto-subscribe to available content.
+    - name: "Register to Red Hat Subscription"
       community.general.redhat_subscription:
         state: present
         username: "{{infrateam_rh_username}}"
