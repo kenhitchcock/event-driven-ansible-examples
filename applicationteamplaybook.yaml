@@ -6,5 +6,7 @@
 
   tasks:
     - name: "Deploying web application"
-      debug:
-        msg: "{{ appkafkamessage }}"
+      ansible.builtin.shell:
+        cmd: "/usr/bin/echo {{ appkafkamessage }} >/var/www/html/index.html"
+
+    
