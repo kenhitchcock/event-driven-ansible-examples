@@ -1,0 +1,23 @@
+---
+- name: Rulebook run playbook for application team
+  hosts: all
+  sources:
+    - ansible.eda.kafka:
+        host: "192.168.5.29"
+        port: "9092"
+        topic: "applicationteam"
+        check_hostname: false
+        verify_mode: "CERT_NONE"
+
+  rules:
+    - name: trigger on new message for application teams
+      condition: event.body != ""
+      action:
+        run_workflow_template:
+          name: applicationteamworkflow
+          organization: Default
+          job_args:
+            extra_vars:
+              appkafkamessage: "{{ event.body }}"
+          retries: 1
+          delay: 10
