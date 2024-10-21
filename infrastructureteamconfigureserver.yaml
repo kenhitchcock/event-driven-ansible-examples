@@ -11,6 +11,13 @@
 - name: Configure Server
   hosts: newvm
   tasks:
+    - name: Register as user (joe_user) with password (somepass) and auto-subscribe to available content.
+      community.general.redhat_subscription:
+        state: present
+        username: "{{infrateam_rh_username}}"
+        password: "{{infrateam_rh_password}}"
+        auto_attach: true
+    
     - name: "Install Web server package"
       ansible.builtin.dnf:
         name: "httpd"
