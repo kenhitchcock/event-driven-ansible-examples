@@ -11,6 +11,6 @@
         
     - name: "Deploying web application"
       ansible.builtin.shell:
-        cmd: "/usr/bin/echo '<BODY><H1>Application server</H1><BR><BR><p>This is the application server required by the organisation.</p></BODY>' >/var/www/html/index.html"
+        cmd: "/usr/bin/echo '<HTML><BODY><H1>Application server</H1><BR><BR><p>This is the application server required by the organisation.</p></BODY><HTML>' >/var/www/html/index.html"
 
     
