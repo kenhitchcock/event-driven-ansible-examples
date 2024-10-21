@@ -5,7 +5,6 @@
     - ansible.eda.kafka:
         host: "192.168.5.29"
         port: "9092"
-        group_id: "mygroupid"
         topic: "databaseteam"
         check_hostname: false
         verify_mode: "CERT_NONE"
@@ -19,7 +18,7 @@
           organization: Default
           job_args:
             extra_vars:
-              kafkamessage: "{{ event.body }}"
+              dbkafkamessage: "{{ event.body }}"
           retries: 1
           delay: 10
         
