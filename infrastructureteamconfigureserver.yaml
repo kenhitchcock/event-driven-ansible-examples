@@ -52,6 +52,13 @@
         cmd: /usr/bin/postgresql-setup --initdb
       when: infrakafkamessage.VM_TYPE == "dbserver"
 
+    - name: "Enable and start database server"
+      ansible.builtin.systemd_service:
+        name: postgresql
+        state: started
+        enabled: true
+      when: infrakafkamessage.VM_TYPE == "dbserver" 
+
     - name: "Unregister to Red Hat Subscription"
       ansible.builtin.shell:
         cmd: /usr/sbin/subscription-manager unregister
