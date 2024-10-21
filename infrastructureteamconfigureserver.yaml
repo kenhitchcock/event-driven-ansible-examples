@@ -21,7 +21,27 @@
         name: "httpd"
         state: present
       when: infrakafkamessage.VM_TYPE == "webserver"
+  
+    - name: "Open Local Firewall Port 80"
+      ansible.posix.firewalld:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+        immediate: true
+      when: infrakafkamessage.VM_TYPE == "webserver"
+    
+    - name: "Enable and start web server"
+      ansible.builtin.systemd_service:
+        name: httpd
+        state: started
+        enabled: true
+      when: infrakafkamessage.VM_TYPE == "webserver" 
 
+    - name: "Unregister to Red Hat Subscription"
+      ansible.builtin.shell:
+        cmd: /usr/sbin/subscription-manager unregister
+      when: infrakafkamessage.VM_TYPE == "webserver"
+    
     - name: "Install Database server package"
       ansible.builtin.dnf:
         name: "postgresql-server"
