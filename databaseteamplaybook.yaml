@@ -1,13 +1,16 @@
 ---
 
-- name: Test Playbook
+- name: "Database team playbook"
   hosts: all
   gather_facts: false
 
   tasks:
-    - name: "Debugging"
-      debug:
-        msg: "Testing"
+    - name: "Download database SQL file"
+      ansible.builtin.get_url:
+        url: https://github.com/kenhitchcock/summitdemoapp/blob/main/database.sql
+        dest: /tmp/database.sql
+        mode: '0440'
+    
     - name: "Debug Message"
       debug:
         msg: "{{ kafkamessage }}"
