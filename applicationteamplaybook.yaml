@@ -1,7 +1,7 @@
 ---
 
 - name: Deploy web application
-  hosts: all
+  hosts: applicationserver
   gather_facts: true
 
   tasks:
