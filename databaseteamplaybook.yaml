@@ -1,7 +1,7 @@
 ---
 
 - name: "Database team playbook"
-  hosts: all
+  hosts: databaseserver
   gather_facts: false
 
   tasks:
