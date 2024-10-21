@@ -6,15 +6,13 @@
 
   tasks:
     - name: "Download database SQL file"
-      ansible.builtin.get_url:
-        url: "{{ dbkafkamessage.DB_sql }}"
-        dest: /tmp/database.sql
-        mode: '0744'
+      ansible.builtin.debug:
+        msg: "Download {{ dbkafkamessage.DB_sql }} to dest /tmp/database.sql"
 
     - name: "Create new Database."
-      debug:
-        msg: "{{ dbkafkamessage }}"
+      ansible.builtin.debug:
+        msg: "/usr/bin/sudo -u postgres /usr/bin/psql {{ dbkafkamessage.DB_Name }} < /tmp/database.sql"
         
     - name: "Updating the HBA Config for new webserver"
-      debug:
+      ansible.builtin.debug:
         msg: "{{ dbkafkamessage }}"
