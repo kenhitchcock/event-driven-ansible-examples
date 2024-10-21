@@ -14,7 +14,6 @@
     - name: "Register to Red Hat Subscription"
       ansible.builtin.shell:
         cmd: /usr/sbin/subscription-manager register --username "{{infrateam_rh_username}}" --password "{{infrateam_rh_password}}"
-      when: infrakafkamessage.VM_TYPE == "webserver"
           
     - name: "Install Web server package"
       ansible.builtin.dnf:
@@ -37,14 +36,23 @@
         enabled: true
       when: infrakafkamessage.VM_TYPE == "webserver" 
 
-    - name: "Unregister to Red Hat Subscription"
+    - name: "Enable postgresql 16 module."
       ansible.builtin.shell:
-        cmd: /usr/sbin/subscription-manager unregister
-      when: infrakafkamessage.VM_TYPE == "webserver"
-    
+        cmd: dnf module enable postgresql:16 -y
+      when: infrakafkamessage.VM_TYPE == "dbserver"
+      
     - name: "Install Database server package"
       ansible.builtin.dnf:
         name: "postgresql-server"
         state: present
       when: infrakafkamessage.VM_TYPE == "dbserver"
+
+    - name: "Postgresql setup."
+      ansible.builtin.shell:
+        cmd: /usr/bin/postgresql-setup --initdb
+      when: infrakafkamessage.VM_TYPE == "dbserver"
+
+    - name: "Unregister to Red Hat Subscription"
+      ansible.builtin.shell:
+        cmd: /usr/sbin/subscription-manager unregister
       
