@@ -7,4 +7,4 @@
   tasks:
     - name: "Deploying web application"
       debug:
-        msg: "{{ kafkamessage }}"
+        msg: "{{ appkafkamessage }}"
