@@ -13,7 +13,7 @@
   tasks:
     - name: "Register to Red Hat Subscription"
       ansible.builtin.shell:
-      cmd: /usr/sbin/subscription-manager register --username "{{infrateam_rh_username}}" --password "{{infrateam_rh_password}}"
+        cmd: /usr/sbin/subscription-manager register --username "{{infrateam_rh_username}}" --password "{{infrateam_rh_password}}"
       when: infrakafkamessage.VM_TYPE == "webserver"
           
     - name: "Install Web server package"
