@@ -12,8 +12,8 @@
   hosts: newvm
   tasks:
     - name: "Register to Red Hat Subscription"
-      shell: |
-         "subscription-manager register --username {{infrateam_rh_username}} --password {{infrateam_rh_password}}"
+      ansible.builtin.shell:
+      cmd: /usr/sbin/subscription-manager register --username "{{infrateam_rh_username}}" --password "{{infrateam_rh_password}}"
       when: infrakafkamessage.VM_TYPE == "webserver"
           
     - name: "Install Web server package"
