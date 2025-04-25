@@ -6,4 +6,4 @@
   tasks:
     - name: "Debugging High CPU issues"
       debug:
-        msg: "{{variable}}"
+        msg: "{{checkmk_hostname}} has this message = {{checkmk_message}}"
