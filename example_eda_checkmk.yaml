@@ -1,0 +1,9 @@
+---
+
+- name: Test Playbook
+  hosts: all
+
+  tasks:
+    - name: "Debugging High CPU issues"
+      debug:
+        msg: "{{variable}}"
