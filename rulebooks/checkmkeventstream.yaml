@@ -16,7 +16,8 @@
           organization: "Default"
           job_args:
             extra_vars:
-              vm_name: "{{ event.payload.hostname }}"
+              checkmk_hostname: "{{ event.payload.hostname }}"
+              checkmk_message: "{{ event.payload.message }}"
           retries: 1
           delay: 1
 
