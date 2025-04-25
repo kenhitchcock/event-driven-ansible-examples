@@ -1,7 +1,7 @@
 ---
 
 - name: Test Playbook
-  hosts: all
+  hosts: "{{ checkmk_hostname | default('all')}}"
 
   tasks:
     - name: "Debugging High CPU issues"
