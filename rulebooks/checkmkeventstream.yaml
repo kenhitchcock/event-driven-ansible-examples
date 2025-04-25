@@ -12,7 +12,7 @@
       condition: event.payload.event_title == "[Triggered] CPU Load is high"
       action:
         run_workflow_template:
-          name: "Automated Response High CPU EDA"
+          name: "checkmkhighcpu"
           organization: "Default"
           job_args:
             extra_vars:
