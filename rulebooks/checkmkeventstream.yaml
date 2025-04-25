@@ -17,8 +17,8 @@
           job_args:
             extra_vars:
               vm_name: "{{ event.payload.hostname }}"
-           retries: 1
-           delay: 1
+          retries: 1
+          delay: 1
 
     - name: Web Application Down Detected
       condition: event.payload.event_title == "[Triggered] Web Server is Down"
