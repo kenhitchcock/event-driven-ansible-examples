@@ -8,6 +8,17 @@
         port: 4999
 
   rules:
+    - name: Web Server Down Detected
+      condition: event.payload.event_title == "Systemd Service httpd: CRITICAL"
+      action:
+        run_workflow_template:
+          name: "CheckMK httpd service down"
+          organization: "Default"
+          job_args:
+            extra_vars:
+              checkmk_hostname: "{{ event.payload.hostname }}"
+              checkmk_message: "{{ event.payload.message }}"
+
     - name: High CPU Usage Detected
       condition: event.payload.event_title == "[Triggered] CPU Load is high"
       action:
@@ -20,18 +31,8 @@
               checkmk_message: "{{ event.payload.message }}"
           retries: 1
           delay: 1
-
-    - name: Web Application Down Detected
-      condition: event.payload.event_title == "[Triggered] Web Server is Down"
-      action:
-        run_workflow_template:
-          name: "Automated Response Web Server EDA"
-          organization: "Default"
-          job_args:
-            extra_vars:
-              vm_name: "{{ event.payload.hostname }}"
-
-    - name: CheckMK Not Responding
+          
+    - name: Service Not Responding
       condition: event.payload.event_title == "[Triggered] Host not reporting data"
       action:
         run_workflow_template:
