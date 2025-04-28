@@ -9,7 +9,7 @@
 
   rules:
     - name: Web Server Down Detected
-      condition: event.payload.event_title == "Systemd Service httpd: CRITICAL"
+      condition: event.payload.event_title == "[Triggered] Systemd Service httpd: CRITICAL"
       action:
         run_workflow_template:
           name: "CheckMK httpd service down"
@@ -18,6 +18,8 @@
             extra_vars:
               checkmk_hostname: "{{ event.payload.hostname }}"
               checkmk_message: "{{ event.payload.message }}"
+          retries: 1
+          delay: 1
 
     - name: High CPU Usage Detected
       condition: event.payload.event_title == "[Triggered] CPU Load is high"
