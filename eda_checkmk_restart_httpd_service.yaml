@@ -1,0 +1,14 @@
+---
+
+- name: CheckMK Restart Service Playbook
+  hosts: "{{ checkmk_hostname | default('all')}}"
+
+  tasks:
+    - name: "Debugging Service Issues
+      ansible.builtin.debug:
+        msg: "{{checkmk_hostname}} has this message = {{checkmk_message}}"
+
+    - name: "Ensure that Service is running"
+      ansible.builtin.systemd_service:
+        state: started
+        name: httpd
