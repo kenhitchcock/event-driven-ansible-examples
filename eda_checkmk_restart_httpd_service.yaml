@@ -4,7 +4,7 @@
   hosts: "{{ checkmk_hostname | default('all')}}"
 
   tasks:
-    - name: "Debugging Service Issues
+    - name: "Debugging Service Issues"
       ansible.builtin.debug:
         msg: "{{checkmk_hostname}} has this message = {{checkmk_message}}"
 
