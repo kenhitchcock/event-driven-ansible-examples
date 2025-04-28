@@ -9,7 +9,7 @@
 
   rules:
     - name: Web Server Down Detected
-      condition: event.payload.event_title == "[Triggered] Systemd Service httpd: CRITICAL"
+      condition: event.payload.event_title == "[Triggered] Systemd Service httpd CRITICAL"
       action:
         run_workflow_template:
           name: "CheckMK httpd service down"
